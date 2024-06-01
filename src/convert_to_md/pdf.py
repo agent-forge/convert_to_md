@@ -37,23 +37,26 @@ def convert_pdf(
     file_path: Path,
     output_file_path: Path,
 ) -> None:
-    model_lst = load_all_models()
-    full_text, images, out_meta = convert_single_pdf(
-        str(file_path),
-        model_lst,
-    )
-
-    with TemporaryDirectory() as temp_dir:
-        subfolder_path = save_markdown(
-            temp_dir,
-            file_path.name,
-            full_text,
-            images,
-            out_meta,
+    try:
+        model_lst = load_all_models()
+        full_text, images, out_meta = convert_single_pdf(
+            str(file_path),
+            model_lst,
         )
-        print(f"Intermediate Markdown saved to {subfolder_path}")
 
-        zip_dir(
-            input_dir=temp_dir,
-            output_file_path=str(output_file_path),
-        )
+        with TemporaryDirectory() as temp_dir:
+            subfolder_path = save_markdown(
+                temp_dir,
+                file_path.name,
+                full_text,
+                images,
+                out_meta,
+            )
+            print(f"Intermediate Markdown saved to {subfolder_path}")
+
+            zip_dir(
+                input_dir=temp_dir,
+                output_file_path=str(output_file_path),
+            )
+    except Exception as e:
+        print(f"Error converting PDF: {e}")

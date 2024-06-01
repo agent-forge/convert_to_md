@@ -8,6 +8,7 @@ Extended service to convert different types of documents to markdown:
 5. Handling caching and conversion status.
 """
 
+import logging
 import uuid
 from pathlib import Path
 
@@ -24,6 +25,11 @@ from .models import (
 )
 from .pdf import process_pdf
 from .util import mk_zip_filename
+
+logging.basicConfig(level=logging.DEBUG)
+
+logger = logging.getLogger(__name__)
+logger.debug("This is a debug message.")
 
 app = FastAPI()
 
