@@ -8,9 +8,7 @@
 #   with-sources: false
 #   generate-hashes: false
 
--e file:.
 aiohttp==3.9.5
-    # via convert-to-md
 aiosignal==1.3.1
     # via aiohttp
 annotated-types==0.7.0
@@ -35,7 +33,6 @@ dnspython==2.6.1
 email-validator==2.1.1
     # via fastapi
 fastapi==0.111.0
-    # via convert-to-md
 fastapi-cli==0.0.4
     # via fastapi
 filelock==3.14.0
@@ -83,7 +80,6 @@ joblib==1.4.2
 markdown-it-py==3.0.0
     # via rich
 marker-pdf==0.2.13
-    # via convert-to-md
 markupsafe==2.1.5
     # via jinja2
 mdurl==0.1.2
@@ -138,7 +134,6 @@ pypdfium2==4.30.0
     # via surya-ocr
     # via texify
 python-dotenv==1.0.1
-    # via convert-to-md
     # via marker-pdf
     # via pydantic-settings
     # via surya-ocr
@@ -188,16 +183,13 @@ threadpoolctl==3.5.0
 tokenizers==0.19.1
     # via transformers
 torch==2.3.0
-    # via convert-to-md
     # via marker-pdf
     # via surya-ocr
     # via texify
     # via torchaudio
     # via torchvision
 torchaudio==2.3.0
-    # via convert-to-md
 torchvision==0.18.0
-    # via convert-to-md
 tqdm==4.66.4
     # via huggingface-hub
     # via marker-pdf
@@ -220,7 +212,6 @@ ujson==5.10.0
 urllib3==2.2.1
     # via requests
 uvicorn==0.30.0
-    # via convert-to-md
     # via fastapi
 uvloop==0.19.0
     # via uvicorn

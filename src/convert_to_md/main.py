@@ -11,6 +11,7 @@ Extended service to convert different types of documents to markdown:
 import logging
 import uuid
 from pathlib import Path
+from typing import Callable
 
 from fastapi import BackgroundTasks, FastAPI, HTTPException
 from fastapi.responses import FileResponse
@@ -40,6 +41,22 @@ ORIGINAL_DIR.mkdir(parents=True, exist_ok=True)
 CONVERTED_DIR.mkdir(parents=True, exist_ok=True)
 
 conversion_tasks: dict[str, ConversionTask] = {}
+
+
+async def process_conversion(
+    request_id: str,
+    original_file_path: Path,
+    converted_file_path: Path,
+    task: ConversionTask,
+    process_fn: Callable,
+):
+    try:
+        await process_fn(request_id, original_file_path, converted_file_path)
+        task.status = TaskStatus.completed
+        task.file_name = converted_file_path.name
+    except Exception as e:
+        task.status = TaskStatus.failed
+        logger.error(f"Conversion failed: {e}")
 
 
 @app.post("/convert")
@@ -76,11 +93,12 @@ async def convert_request(
     conversion_tasks[task_id] = task
 
     background_tasks.add_task(
-        process_fn,
+        process_conversion,
         request_id,
         original_file_path,
         converted_file_path,
         task,
+        process_fn,
     )
 
     return task

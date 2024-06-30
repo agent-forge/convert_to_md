@@ -1,7 +1,6 @@
 from pathlib import Path
 from tempfile import TemporaryDirectory
 
-from .models import ConversionTask, TaskStatus
 from .util import download_file, run_command, unzip, zip_dir
 
 
@@ -21,21 +20,15 @@ async def process_arxiv(
     context: str,
     original_file_path: Path,
     converted_file_path: Path,
-    task: ConversionTask,
 ) -> None:
-    try:
-        await download_file(
-            uri=f"https://arxiv.org/e-print/{context}",
-            file_path=original_file_path,
-        )
-        convert_arxiv_paper(
-            file_path=original_file_path,
-            output_file_path=converted_file_path,
-        )
-        task.status = TaskStatus.completed
-    except Exception as e:
-        task.status = TaskStatus.failed
-        task.error = str(e)
+    await download_file(
+        uri=f"https://arxiv.org/e-print/{context}",
+        file_path=original_file_path,
+    )
+    convert_arxiv_paper(
+        file_path=original_file_path,
+        output_file_path=converted_file_path,
+    )
 
 
 def convert_arxiv_paper(

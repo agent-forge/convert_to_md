@@ -8,9 +8,7 @@
 #   with-sources: false
 #   generate-hashes: false
 
--e file:.
 aiohttp==3.9.5
-    # via convert-to-md
 aiosignal==1.3.1
     # via aiohttp
 annotated-types==0.7.0
@@ -25,23 +23,27 @@ certifi==2024.2.2
     # via httpcore
     # via httpx
     # via requests
+cfgv==3.4.0
+    # via pre-commit
 charset-normalizer==3.3.2
     # via requests
 click==8.1.7
     # via typer
     # via uvicorn
+distlib==0.3.8
+    # via virtualenv
 dnspython==2.6.1
     # via email-validator
 email-validator==2.1.1
     # via fastapi
 fastapi==0.111.0
-    # via convert-to-md
 fastapi-cli==0.0.4
     # via fastapi
 filelock==3.14.0
     # via huggingface-hub
     # via torch
     # via transformers
+    # via virtualenv
 filetype==1.2.0
     # via marker-pdf
     # via surya-ocr
@@ -69,6 +71,8 @@ httpx==0.27.0
 huggingface-hub==0.23.2
     # via tokenizers
     # via transformers
+identify==2.5.36
+    # via pre-commit
 idna==3.7
     # via anyio
     # via email-validator
@@ -83,7 +87,6 @@ joblib==1.4.2
 markdown-it-py==3.0.0
     # via rich
 marker-pdf==0.2.13
-    # via convert-to-md
 markupsafe==2.1.5
     # via jinja2
 mdurl==0.1.2
@@ -95,6 +98,8 @@ multidict==6.0.5
     # via yarl
 networkx==3.3
     # via torch
+nodeenv==1.9.0
+    # via pre-commit
 numpy==1.26.4
     # via marker-pdf
     # via opencv-python
@@ -117,6 +122,9 @@ pillow==10.3.0
     # via surya-ocr
     # via texify
     # via torchvision
+platformdirs==4.2.2
+    # via virtualenv
+pre-commit==3.7.1
 pydantic==2.7.2
     # via fastapi
     # via marker-pdf
@@ -138,7 +146,6 @@ pypdfium2==4.30.0
     # via surya-ocr
     # via texify
 python-dotenv==1.0.1
-    # via convert-to-md
     # via marker-pdf
     # via pydantic-settings
     # via surya-ocr
@@ -148,6 +155,7 @@ python-multipart==0.0.9
     # via fastapi
 pyyaml==6.0.1
     # via huggingface-hub
+    # via pre-commit
     # via transformers
     # via uvicorn
 rapidfuzz==3.9.2
@@ -188,16 +196,13 @@ threadpoolctl==3.5.0
 tokenizers==0.19.1
     # via transformers
 torch==2.3.0
-    # via convert-to-md
     # via marker-pdf
     # via surya-ocr
     # via texify
     # via torchaudio
     # via torchvision
 torchaudio==2.3.0
-    # via convert-to-md
 torchvision==0.18.0
-    # via convert-to-md
 tqdm==4.66.4
     # via huggingface-hub
     # via marker-pdf
@@ -220,10 +225,11 @@ ujson==5.10.0
 urllib3==2.2.1
     # via requests
 uvicorn==0.30.0
-    # via convert-to-md
     # via fastapi
 uvloop==0.19.0
     # via uvicorn
+virtualenv==20.26.2
+    # via pre-commit
 watchfiles==0.22.0
     # via uvicorn
 wcwidth==0.2.13

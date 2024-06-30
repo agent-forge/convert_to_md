@@ -22,7 +22,10 @@ build-backend = "hatchling.build"
 
 [tool.rye]
 managed = true
-dev-dependencies = []
+virtual = true
+dev-dependencies = [
+    "pre-commit>=3.7.1",
+]
 
 [tool.rye.scripts]
 srv = "uvicorn convert_to_md.main:app --reload"

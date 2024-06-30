@@ -6,7 +6,6 @@ from marker.logger import configure_logging
 from marker.models import load_all_models
 from marker.output import save_markdown
 
-from .models import ConversionTask, TaskStatus
 from .util import download_file, zip_dir
 
 configure_logging()
@@ -16,21 +15,15 @@ async def process_pdf(
     context: str,
     original_file_path: Path,
     converted_file_path: Path,
-    task: ConversionTask,
 ) -> None:
-    try:
-        await download_file(
-            uri=context,
-            file_path=original_file_path,
-        )
-        convert_pdf(
-            file_path=original_file_path,
-            output_file_path=converted_file_path,
-        )
-        task.status = TaskStatus.completed
-    except Exception as e:
-        task.status = TaskStatus.failed
-        task.error = str(e)
+    await download_file(
+        uri=context,
+        file_path=original_file_path,
+    )
+    convert_pdf(
+        file_path=original_file_path,
+        output_file_path=converted_file_path,
+    )
 
 
 def convert_pdf(

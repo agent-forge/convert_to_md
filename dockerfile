@@ -20,7 +20,11 @@ RUN echo "deb https://notesalexp.org/tesseract-ocr5/$(lsb_release -cs)/ $(lsb_re
     tesseract-ocr-fra tesseract-ocr-chi-sim tesseract-ocr-jpn \
     tesseract-ocr-kor tesseract-ocr-hin \
     pandoc \
-    latexml
+    latexml \
+    && rm -rf /var/lib/apt/lists/*
+
+# Set the tesseract data folder path for Ubuntu 22.04 with tesseract 5
+ENV TESSDATA_PREFIX=/usr/share/tesseract-ocr/5/tessdata
 
 # Upgrade pip
 RUN pip install --no-cache-dir --upgrade pip
@@ -28,12 +32,10 @@ RUN pip install --no-cache-dir --upgrade pip
 # Set the working directory in the container to /app
 WORKDIR /app
 
-# Add the current directory contents into the container at /app
-ADD . /app
-
-
 # Install any needed packages specified in requirements.lock
-RUN pip install --no-cache-dir -r requirements.lock
+COPY requirements.lock ./
+
+RUN PYTHONDONTWRITEBYTECODE=1 pip install --no-cache-dir -r requirements.lock
 
 # Uninstall torch
 RUN pip uninstall torch torchvision torchaudio -y
@@ -41,15 +43,13 @@ RUN pip uninstall torch torchvision torchaudio -y
 # Install torch without CUDA support
 RUN pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
 
-# Set the tesseract data folder path for Ubuntu 22.04 with tesseract 5
-ENV TESSDATA_PREFIX=/usr/share/tesseract-ocr/5/tessdata
+COPY src .
 
 # Make port 80 available to the world outside this container
 EXPOSE 80
 
 # Run app.py when the container launches
-CMD ["uvicorn", "convert_to_md.main:app", "--host", "0.0.0.0", "--port", "80", "--log-level", "debug"]
-
+CMD ["uvicorn", "convert_to_md.main:app", "--host", "0.0.0.0", "--port", "80", "--log-level", "debug", "--workers", "4"]
 
 
 
